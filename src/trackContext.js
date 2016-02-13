@@ -11,7 +11,7 @@ export function trackContext({
         }
 
         // get current context
-        const context = get(req, `raw.session.sessionAttributes.${key}`, []);
+        const context = get(req, `raw.session.attributes.${key}`, []);
         req.context = context;
 
         // before the request sends update the __context__ property in the session

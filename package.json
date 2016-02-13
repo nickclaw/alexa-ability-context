@@ -38,6 +38,7 @@
     "lodash": "^4.0.1"
   },
   "devDependencies": {
+    "alexa-ability": "^0.9.1",
     "babel": "^6.3.26",
     "babel-cli": "^6.4.5",
     "babel-eslint": "^4.1.8",
