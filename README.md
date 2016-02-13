@@ -1,4 +1,4 @@
-# alexa-ability-context
+# alexa-ability-context [![Build Status](https://travis-ci.org/nickclaw/alexa-ability-context.svg?branch=master)](https://travis-ci.org/nickclaw/alexa-ability-context)
 
 Simplify building multistep conversations with context-aware intent handling.
 
