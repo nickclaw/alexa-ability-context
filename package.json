@@ -1,7 +1,7 @@
 {
   "name": "alexa-ability-context",
   "version": "0.1.0",
-  "description": "",
+  "description": "Simplify building multistep conversations with context-aware intent handling ",
   "main": "lib/index.js",
   "scripts": {
     "test": "./scripts/test.sh"
