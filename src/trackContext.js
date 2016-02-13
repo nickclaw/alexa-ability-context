@@ -5,6 +5,11 @@ export function trackContext({
 } = {}) {
     // return middleware
     return function contextMiddleware(req, next) {
+        // self aware
+        if (req.context) {
+            return next();
+        }
+
         // get current context
         const context = get(req, `raw.session.sessionAttributes.${key}`, []);
         req.context = context;
