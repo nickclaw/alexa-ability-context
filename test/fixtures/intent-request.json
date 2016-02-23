@@ -12,8 +12,14 @@
         "weekly": false,
         "monthly": false
       },
-      "__context__": ["launch", "AMAZON.YesIntent"],
-      "__custom__": ["launch", "AMAZON.NoIntent"]
+      "__context__": [
+          {"event": "launch"},
+          {"event": "AMAZON.YesIntent"}
+      ],
+      "__custom__": [
+          {"event": "launch"},
+          {"event": "AMAZON.NoIntent"}
+      ]
     },
     "user": {
       "userId": "amzn1.account.AM3B00000000000000000000000"

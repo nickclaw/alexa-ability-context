@@ -10,7 +10,7 @@ import last from 'lodash/last';
 export function after(event, handler) {
     return function handleContext(req, next) {
         const lastHandled = last(req.context);
-        return lastHandled && lastHandled === event ?
+        return lastHandled && lastHandled.event === event ?
             handler(req, next) :
             next();
     };
@@ -25,7 +25,8 @@ export function after(event, handler) {
  */
 export function matches(regex, handler) {
     return function handleContext(req, next) {
-        return regex.test(req.context.join(':')) ?
+        const string = req.context.map(e => e.event).join(':');
+        return regex.test(string) ?
             handler(req, next) :
             next();
     };

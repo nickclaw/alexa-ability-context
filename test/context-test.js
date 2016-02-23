@@ -1,7 +1,10 @@
 import * as context from '../src/context';
 import noop from 'lodash/noop';
 
-const req = { context: ['bar', 'foo'] };
+const req = { context: [
+    { event: 'bar' },
+    { event: 'foo' }
+] };
 
 describe('context object', function() {
 

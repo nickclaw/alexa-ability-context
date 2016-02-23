@@ -51,7 +51,15 @@ A middleware factory that takes an optional `options` object. The currently supp
 options are:
  - `key`: defaults to `__context__`, the session key to store the context between requests.
 
-The returned middleware will add an additional property to the request object called `context`. Which will be an array of strings representing every request handled during the session.
+The returned middleware will add an additional property to the request object called
+`context`. Which will look something like this:
+
+```json
+[
+    { "event": "launch" },
+    { "event": "ExampleIntent" }
+]
+```
 
 ##### `context.after(event, handler) -> handler`
 Creates a new handler function that only executes when the previous intent matches.
