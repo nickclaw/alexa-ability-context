@@ -1,4 +1,4 @@
-import { context } from '../src/context';
+import * as context from '../src/context';
 import noop from 'lodash/noop';
 
 const req = { context: ['bar', 'foo'] };

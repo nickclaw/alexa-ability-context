@@ -1,10 +1,29 @@
 import last from 'lodash/last';
 
 /**
- *
- *
+ * Middleware creator that only executes the handler when
+ * the last event matches the given one.
+ * @param {String} event
+ * @param {Function} handler
+ * @return {Function} middleware
  */
-function matches(regex, handler) {
+export function after(event, handler) {
+    return function handleContext(req, next) {
+        const lastHandled = last(req.context);
+        return lastHandled && lastHandled === event ?
+            handler(req, next) :
+            next();
+    };
+}
+
+/**
+ * Middleware creator that only executes the handler when
+ * the regex matches the requests context
+ * @param {RegExp|String} regex
+ * @param {Function} handler
+ * @return {Function} middleware
+ */
+export function matches(regex, handler) {
     return function handleContext(req, next) {
         return regex.test(req.context.join(':')) ?
             handler(req, next) :
@@ -13,31 +32,16 @@ function matches(regex, handler) {
 }
 
 /**
- *
- *
+ * Middleware creator that only executes the handler when
+ * the custom function returns true given the the request
+ * @param {Function} shouldHandle
+ * @param {Function} handler
+ * @return {Function} middleware
  */
-function custom(fn, handler) {
+export function custom(shouldHandle, handler) {
     return function handleContext(req, next) {
-        return fn(req) ?
+        return shouldHandle(req) ?
             handler(req, next) :
             next();
     };
 }
-
-/**
- *
- *
- */
-function after(event, handler) {
-    return function handleContext(req, next) {
-        return last(req.context) === event ?
-            handler(req, next) :
-            next();
-    };
-}
-
-export const context = {
-    matches,
-    custom,
-    after,
-};
