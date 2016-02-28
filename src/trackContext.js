@@ -14,9 +14,8 @@ export function trackContext({
 
         // functions to modify context behavior
         let shouldSave = true;
-        let shouldDestroy = false;
-        const destroyContext = () => shouldDestroy = true;
-        const skipContext = () => shouldSave = false;
+        const skipContext = () => { shouldSave = false };
+        const destroyContext = () => { this.splice(0, this.length) };
         const now = { event: req.handler };
 
 
@@ -30,9 +29,7 @@ export function trackContext({
 
         // before the request sends, update the context in the session
         req.on('finished', () => {
-            const newContext = !shouldDestroy ?
-                clone(context) :
-                [];
+            const newContext = clone(context);
 
             if (shouldSave) {
                 newContext.push(now);

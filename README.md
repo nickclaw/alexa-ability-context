@@ -63,11 +63,15 @@ The `trackContext` middleware will add an additional property to the request obj
 ]
 ```
 
+##### `req.context.now`
+The object that will be added to the context for future requests. By default it is just
+`{ event: 'name' }`, but you're free to modify it or add properties however you like.
+
 ##### `req.context.destroy()`
+Clears the context.
 
 ##### `req.context.skip()`
-
-##### `req.context.now`
+Causes the `req.context.now` object to not be persisted.
 
 #### `context`
 
