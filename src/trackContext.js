@@ -12,17 +12,16 @@ export function trackContext({
             return next();
         }
 
-        // functions to modify context behavior
-        let shouldSave = true;
-        const skipContext = () => { shouldSave = false };
-        const destroyContext = () => { this.splice(0, this.length) };
-        const now = { event: req.handler };
-
-
         // prepare current context
         const context = clone(get(req, `raw.session.attributes.${key}`, []));
-        Object.defineProperty(context, 'destroy', { value: destroyContext });
-        Object.defineProperty(context, 'skip', { value: skipContext });
+        let shouldSave = true;
+        const now = { event: req.handler };
+        Object.defineProperty(context, 'destroy', {
+            value: () => { context.splice(0, context.length); },
+        });
+        Object.defineProperty(context, 'skip', {
+            value: () => { shouldSave = false; },
+        });
         Object.defineProperty(context, 'now', { value: now });
         req[property] = context;
 
