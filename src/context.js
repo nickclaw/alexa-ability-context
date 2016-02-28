@@ -1,4 +1,6 @@
 import last from 'lodash/last';
+import map from 'lodash/map';
+import compact from 'lodash/compact';
 
 /**
  * Middleware creator that only executes the handler when
@@ -25,7 +27,7 @@ export function after(event, handler) {
  */
 export function matches(regex, handler) {
     return function handleContext(req, next) {
-        const string = req.context.map(e => e.event).join(':');
+        const string = compact(map(req.context, 'event')).join(':');
         return regex.test(string) ?
             handler(req, next) :
             next();
