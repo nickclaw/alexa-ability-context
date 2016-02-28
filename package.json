@@ -46,7 +46,7 @@
     "lodash": "^4.3.0"
   },
   "devDependencies": {
-    "alexa-ability": "^0.9.1",
+    "alexa-ability": "^0.11.1",
     "babel-cli": "^6.4.5",
     "babel-eslint": "^4.1.8",
     "babel-preset-es2015": "^6.3.13",

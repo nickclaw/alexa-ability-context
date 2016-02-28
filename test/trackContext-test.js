@@ -29,6 +29,12 @@ describe('trackContext', function() {
             expect(req.context).to.deep.equal(intentRequest.session.attributes.__custom__);
         });
 
+        it('should honor the "property" option', function() {
+            app.use(trackContext({ property: 'ctx' }));
+            const req = app.handle(intentRequest);
+            expect(req.ctx).to.deep.equal(intentRequest.session.attributes.__context__);
+        });
+
         it('should append the handler to the context before being sent', function() {
             app.use(trackContext({ key: '__custom__' }));
             app.on('GetZodiacHoroscopeIntent', req => req.end());
@@ -36,6 +42,43 @@ describe('trackContext', function() {
                 expect(req.context.length).to.equal(4);
                 expect(req.context[3]).to.equal('GetZodiacHoroscopeIntent');
             });
+        });
+    });
+
+    describe('req.context object', function() {
+
+        it('should have a "destroy" function', function(done) {
+            app.use(trackContext());
+            app.use(req => {
+                req.context.destroy();
+                req.end();
+            })
+            app.handle(intentRequest, function(err, req) {
+                expect(err).to.be.falsy;
+                expect(req.session.__context__.length).to.equal(1);
+                expect(req.session.__context__[0].event).to.equal('GetZodiacHoroscopeIntent');
+                done();
+            });
+        });
+
+        it('should have a "skip" function', function(done) {
+            app.use(trackContext());
+            app.use(req => {
+                req.context.destroy();
+                req.context.skip();
+                req.end();
+            })
+            app.handle(intentRequest, function(err, req) {
+                expect(err).to.be.falsy;
+                expect(req.session.__context__.length).to.equal(0);
+                done();
+            });
+        });
+
+        it('should have a "now" property', function() {
+            app.use(trackContext());
+            const req = app.handle(intentRequest);
+            expect(req.context.now).to.deep.equal({ event: 'GetZodiacHoroscopeIntent' });
         });
     });
 });

@@ -1,4 +1,5 @@
 import get from 'lodash/get';
+import clone from 'lodash/clone';
 
 export function trackContext({
     key = '__context__',
@@ -20,7 +21,7 @@ export function trackContext({
 
 
         // prepare current context
-        const context = get(req, `raw.session.attributes.${key}`, []);
+        const context = clone(get(req, `raw.session.attributes.${key}`, []));
         Object.defineProperty(context, 'destroy', { value: destroyContext });
         Object.defineProperty(context, 'skip', { value: skipContext });
         Object.defineProperty(context, 'now', { value: now });
@@ -30,10 +31,10 @@ export function trackContext({
         // before the request sends, update the context in the session
         req.on('finished', () => {
             const newContext = !shouldDestroy ?
-                [...context] :
+                clone(context) :
                 [];
 
-            if (!shouldSave) {
+            if (shouldSave) {
                 newContext.push(now);
             }
 
