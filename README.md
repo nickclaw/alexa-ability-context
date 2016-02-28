@@ -50,6 +50,7 @@ export const handler = handleAbility(app);
 A middleware factory that takes an optional `options` object. The currently supported
 options are:
  - `key`: defaults to `__context__`, the session key to store the context between requests.
+ - `property`: defaults `context`, the property to expose the context object as on the request.
 
 #### `req.context`
 The `trackContext` middleware will add an additional property to the request object called

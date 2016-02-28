@@ -2,11 +2,12 @@ import get from 'lodash/get';
 
 export function trackContext({
     key = '__context__',
+    property = 'context',
 } = {}) {
     // return middleware
     return function contextMiddleware(req, next) {
         // self aware
-        if (req.context) {
+        if (req[property]) {
             return next();
         }
 
@@ -23,7 +24,7 @@ export function trackContext({
         Object.defineProperty(context, 'destroy', { value: destroyContext });
         Object.defineProperty(context, 'skip', { value: skipContext });
         Object.defineProperty(context, 'now', { value: now });
-        req.context = context;
+        req[property] = context;
 
 
         // before the request sends, update the context in the session
