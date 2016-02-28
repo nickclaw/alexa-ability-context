@@ -46,12 +46,13 @@ export const handler = handleAbility(app);
 
 ### API
 
-##### `trackContext(options) -> middleware`
+#### `trackContext(options) -> middleware`
 A middleware factory that takes an optional `options` object. The currently supported
 options are:
  - `key`: defaults to `__context__`, the session key to store the context between requests.
 
-The returned middleware will add an additional property to the request object called
+#### `req.context`
+The `trackContext` middleware will add an additional property to the request object called
 `context`. Which will look something like this:
 
 ```json
@@ -60,6 +61,14 @@ The returned middleware will add an additional property to the request object ca
     { "event": "ExampleIntent" }
 ]
 ```
+
+##### `req.context.destroy()`
+
+##### `req.context.skip()`
+
+##### `req.context.now`
+
+#### `context`
 
 ##### `context.after(event, handler) -> handler`
 Creates a new handler function that only executes when the previous intent matches.
